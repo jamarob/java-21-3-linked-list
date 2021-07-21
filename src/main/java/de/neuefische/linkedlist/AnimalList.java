@@ -5,20 +5,33 @@ public class AnimalList {
     private AnimalListItem head;
 
     public void add(Animal animal) {
-        if(head == null){
-            head = new AnimalListItem(animal);
+        AnimalListItem newItem = new AnimalListItem(animal);
+        if(isEmpty()){
+            setFirstItem(newItem);
         }else {
-            AnimalListItem current = head;
-            while(current.getNext() != null){
-                current = current.getNext();
-            }
-            current.setNext(new AnimalListItem(animal));
+            appendToLastItem(newItem);
         }
+    }
+
+    private boolean isEmpty() {
+        return head == null;
+    }
+
+    private void setFirstItem(AnimalListItem item){
+        head = item;
+    }
+
+    private void appendToLastItem(AnimalListItem item){
+        AnimalListItem current = head;
+        while(current.getNext() != null){
+            current = current.getNext();
+        }
+        current.setNext(item);
     }
 
     @Override
     public String toString(){
-        if(head == null){
+        if(isEmpty()){
             return "";
         }
 
