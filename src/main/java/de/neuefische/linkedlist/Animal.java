@@ -3,7 +3,6 @@ package de.neuefische.linkedlist;
 import java.util.Objects;
 
 public class Animal {
-
     private String name;
 
     public Animal(String name) {
@@ -33,8 +32,6 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "Animal{" +
-                "name='" + name + '\'' +
-                '}';
+        return  name;
     }
 }
