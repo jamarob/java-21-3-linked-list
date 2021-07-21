@@ -1,69 +1,94 @@
 package de.neuefische.linkedlist;
 
-import java.lang.reflect.AnnotatedArrayType;
-
 public class AnimalList {
 
     private AnimalListItem head;
 
-    public AnimalList(Animal head) {
-        if (head != null) {
-            AnimalListItem newItem = new AnimalListItem(head);
+    public AnimalList(Animal whichAnimal) {
+        if (isEmpty()) {
+            AnimalListItem newItem = new AnimalListItem(whichAnimal);
             this.head = newItem;
         }
+    }
+
+    private boolean isEmpty() {
+        return head == null;
+    }
+
+    private void setFirstItem(Animal animal) {
+        head = new AnimalListItem(animal);
     }
 
     public AnimalListItem getHead() {
         return head;
     }
 
-    public void add(Animal newAnimal){
-        boolean running = true;
-        AnimalListItem current = head;
-        while (running) {
-            if (current.getNext() == null) {
-                current.setNext(new AnimalListItem(newAnimal));
-                running = false;
-            } else {
-                current = current.getNext();
-            }
+    public void add(Animal newAnimal) {
+        if (isEmpty()) {
+            setFirstItem(newAnimal);
         }
+        AnimalListItem current = head;
+        while (current.getNext() != null) {
+            current = current.getNext();
+        }
+        current.setNext(new AnimalListItem(newAnimal));
     }
+
 
     @Override
     public String toString() {
-        String actual="";
-        boolean running=true;
-        AnimalListItem toAdd = head;
-        while (running){
-            actual += toAdd.toString();
-            if (toAdd.getNext()!=null){
-                toAdd = toAdd.getNext();
-            } else {
-                running = false;
-            }
+        if (isEmpty()) {
+            return "";
         }
-        return actual;
+        StringBuilder completeString = new StringBuilder(head.getValue().getName());
+        AnimalListItem toAdd = head.getNext();
+        while (toAdd != null) {
+            completeString.append(" -> ").append(toAdd.getValue().getName());
+            toAdd = toAdd.getNext();
+        }
+        return completeString.toString();
     }
 
-    public void remove (Animal animalToRemove){
-        AnimalListItem current = head;
-        int counter = 1;
-        boolean running = true;
-        while (running) {
-            if (current.getValue().equals(animalToRemove)) {
-                if(counter==1){
-                    head = current.getNext();
-                } else {
-                    AnimalListItem beforeToDelete = head;
-                    for (int i = 2; i < counter; i++) {
 
-                    }
-                }
-            } else {
-                current = current.getNext();
-                counter++;
-            }
+    public void remove(Animal animalToRemove) {
+        if(specialCaseCheckerTurnsOn(animalToRemove)){
+            return;
         }
+        AnimalListItem current = head;
+        int counter = 0;
+        while (current.getValue()!=animalToRemove) {
+            current = current.getNext();
+            counter++;
+        }
+        AnimalListItem beforeToDelete = head;
+        for (int i = 0; i >= counter; i++) {
+            beforeToDelete = beforeToDelete.getNext();
+        }
+        beforeToDelete.setNext(current.getNext());
+    }
+
+    private boolean specialCaseCheckerTurnsOn(Animal animalToRemove) {
+        if (isEmpty()) {
+            return true;
+        }
+        if (head.getValue() == animalToRemove) {
+            head = head.getNext();
+            return true;
+        }
+        if (animalIsInList(animalToRemove)) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean animalIsInList(Animal animalToRemove) {
+        AnimalListItem compareItem = head;
+        while (compareItem.getNext() != null) {
+            if (compareItem.getValue() == animalToRemove) {
+                return true;
+            }
+            compareItem = compareItem.getNext();
+        }
+        return false;
     }
 }
