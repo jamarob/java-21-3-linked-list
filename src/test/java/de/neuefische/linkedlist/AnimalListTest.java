@@ -27,10 +27,9 @@ class AnimalListTest {
         AnimalList list = new AnimalList();
 
         // WHEN
-        list
-                .add(dog)
-                .add(cat)
-                .add(mouse);
+        list.add(dog);
+        list.add(cat);
+        list.add(mouse);
         String actual = list.toString();
 
         // THEN
