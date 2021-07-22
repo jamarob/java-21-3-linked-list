@@ -38,6 +38,7 @@ class AnimalListTest {
 
     }
 
+    @Test
     public void testAddToEmptyListAndToString(){
         //GIVEN
         Animal pferd = new Animal("Pferd");

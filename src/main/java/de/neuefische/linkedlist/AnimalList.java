@@ -5,10 +5,7 @@ public class AnimalList {
     private AnimalListItem head;
 
     public AnimalList(Animal whichAnimal) {
-        if (isEmpty()) {
-            AnimalListItem newItem = new AnimalListItem(whichAnimal);
-            this.head = newItem;
-        }
+            this.head = new AnimalListItem(whichAnimal);
     }
 
     public AnimalListItem getHead() {
@@ -18,6 +15,7 @@ public class AnimalList {
     public void add(Animal newAnimal) {
         if (isEmpty()) {
             setFirstItem(newAnimal);
+            return;
         }
         AnimalListItem current = head;
         while (current.getNext() != null) {
