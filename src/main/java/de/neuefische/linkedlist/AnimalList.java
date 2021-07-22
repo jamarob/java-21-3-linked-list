@@ -46,4 +46,28 @@ public class AnimalList {
         return builder.toString();
     }
 
+    public void remove(Animal animal) {
+        if(isEmpty()){
+            return;
+        }
+
+       while(head != null && head.getValue().equals(animal)){
+           head = head.getNext();
+       }
+
+       if(isEmpty()){
+           return;
+       }
+
+       AnimalListItem current = head;
+       while(current.getNext() != null){
+
+           if(current.getNext().getValue().equals(animal)){
+               current.setNext(current.getNext().getNext());
+           }else{
+               current = current.getNext();
+           }
+       }
+
+    }
 }
