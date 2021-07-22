@@ -9,6 +9,14 @@ public class AnimalListItem {
         this.value = animal;
     }
 
+    public boolean contains(Animal value){
+        return this.value.equals(value);
+    }
+
+    public void skipNext(){
+        next = next.getNext();
+    }
+
     public Animal getValue() {
         return value;
     }

@@ -6,9 +6,9 @@ public class AnimalList {
 
     public void add(Animal animal) {
         AnimalListItem newItem = new AnimalListItem(animal);
-        if(isEmpty()){
+        if (isEmpty()) {
             setFirstItem(newItem);
-        }else {
+        } else {
             appendToLastItem(newItem);
         }
     }
@@ -17,28 +17,28 @@ public class AnimalList {
         return head == null;
     }
 
-    private void setFirstItem(AnimalListItem item){
+    private void setFirstItem(AnimalListItem item) {
         head = item;
     }
 
-    private void appendToLastItem(AnimalListItem item){
+    private void appendToLastItem(AnimalListItem item) {
         AnimalListItem current = head;
-        while(current.getNext() != null){
+        while (current.getNext() != null) {
             current = current.getNext();
         }
         current.setNext(item);
     }
 
     @Override
-    public String toString(){
-        if(isEmpty()){
+    public String toString() {
+        if (isEmpty()) {
             return "";
         }
 
         StringBuilder builder = new StringBuilder(head.getValue().getName());
 
         AnimalListItem current = head.getNext();
-        while(current != null){
+        while (current != null) {
             builder.append(" -> ").append(current.getValue().getName());
             current = current.getNext();
         }
@@ -47,27 +47,31 @@ public class AnimalList {
     }
 
     public void remove(Animal animal) {
-        if(isEmpty()){
+        removeAllFromHead(animal);
+        removeAllFromTail(animal);
+    }
+
+    private void removeAllFromHead(Animal value) {
+        if (isEmpty()) {
             return;
         }
+        while (!isEmpty() && head.contains(value)) {
+            head = head.getNext();
+        }
+    }
 
-       while(head != null && head.getValue().equals(animal)){
-           head = head.getNext();
-       }
+    private void removeAllFromTail(Animal value) {
+        if (isEmpty()) {
+            return;
+        }
+        AnimalListItem current = head;
+        while (current.getNext() != null) {
 
-       if(isEmpty()){
-           return;
-       }
-
-       AnimalListItem current = head;
-       while(current.getNext() != null){
-
-           if(current.getNext().getValue().equals(animal)){
-               current.setNext(current.getNext().getNext());
-           }else{
-               current = current.getNext();
-           }
-       }
-
+            if (current.getNext().contains(value)) {
+                current.skipNext();
+            } else {
+                current = current.getNext();
+            }
+        }
     }
 }
