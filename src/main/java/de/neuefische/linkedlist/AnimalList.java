@@ -11,14 +11,6 @@ public class AnimalList {
         }
     }
 
-    private boolean isEmpty() {
-        return head == null;
-    }
-
-    private void setFirstItem(Animal animal) {
-        head = new AnimalListItem(animal);
-    }
-
     public AnimalListItem getHead() {
         return head;
     }
@@ -34,6 +26,26 @@ public class AnimalList {
         current.setNext(new AnimalListItem(newAnimal));
     }
 
+    public void remove(Animal animalToRemove) {
+        if (specialCaseCheckerTurnsOn(animalToRemove)) {
+            return;
+        }
+        AnimalListItem current = head;
+        int counter = 0;
+        while (current.getValue() != animalToRemove) {
+            current = current.getNext();
+            counter++;
+        }
+        AnimalListItem beforeToDelete = head;
+        for (int i = 2; i <= counter; i++) {
+            beforeToDelete = beforeToDelete.getNext();
+        }
+        if (current.getNext() == null) {
+            beforeToDelete.setNext(null);
+        } else {
+            beforeToDelete.setNext(current.getNext());
+        }
+    }
 
     @Override
     public String toString() {
@@ -47,24 +59,6 @@ public class AnimalList {
             toAdd = toAdd.getNext();
         }
         return completeString.toString();
-    }
-
-
-    public void remove(Animal animalToRemove) {
-        if(specialCaseCheckerTurnsOn(animalToRemove)){
-            return;
-        }
-        AnimalListItem current = head;
-        int counter = 0;
-        while (current.getValue()!=animalToRemove) {
-            current = current.getNext();
-            counter++;
-        }
-        AnimalListItem beforeToDelete = head;
-        for (int i = 0; i >= counter; i++) {
-            beforeToDelete = beforeToDelete.getNext();
-        }
-        beforeToDelete.setNext(current.getNext());
     }
 
     private boolean specialCaseCheckerTurnsOn(Animal animalToRemove) {
@@ -89,6 +83,15 @@ public class AnimalList {
             }
             compareItem = compareItem.getNext();
         }
+        if (compareItem.getValue() == animalToRemove) {
+            return true;
+        }
         return false;
+    }
+
+    private boolean isEmpty() { return head == null; }
+
+    private void setFirstItem(Animal animal) {
+        head = new AnimalListItem(animal);
     }
 }

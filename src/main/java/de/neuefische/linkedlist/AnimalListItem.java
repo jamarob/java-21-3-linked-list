@@ -15,9 +15,7 @@ public class AnimalListItem {
     }
 
     public void setNext(AnimalListItem next) {
-        if (next!=null) {
-            this.next = next;
-        }
+        this.next = next;
     }
 
     public Animal getValue() {
@@ -34,11 +32,11 @@ public class AnimalListItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AnimalListItem that = (AnimalListItem) o;
-        return Objects.equals(value, that.value);
+        return Objects.equals(value, that.value) && Objects.equals(next, that.next);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(value, next);
     }
 }
