@@ -8,6 +8,10 @@ public class AnimalList {
             this.head = new AnimalListItem(whichAnimal);
     }
 
+    public AnimalList(){
+        head = null;
+    }
+
     public AnimalListItem getHead() {
         return head;
     }
@@ -30,7 +34,7 @@ public class AnimalList {
         }
         AnimalListItem current = head;
         int counter = 0;
-        while (current.getValue() != animalToRemove) {
+        while (!current.getValue().equals(animalToRemove)) {
             current = current.getNext();
             counter++;
         }
@@ -43,6 +47,7 @@ public class AnimalList {
         } else {
             beforeToDelete.setNext(current.getNext());
         }
+        remove(animalToRemove);
     }
 
     @Override
@@ -63,28 +68,27 @@ public class AnimalList {
         if (isEmpty()) {
             return true;
         }
-        if (head.getValue() == animalToRemove) {
+        if (head.getValue().equals(animalToRemove)) {
             head = head.getNext();
+            remove(animalToRemove);
             return true;
         }
-        if (animalIsInList(animalToRemove)) {
-            return false;
-        }
-        return true;
+        return animalIsInList(animalToRemove);
+
     }
 
     private boolean animalIsInList(Animal animalToRemove) {
         AnimalListItem compareItem = head;
         while (compareItem.getNext() != null) {
-            if (compareItem.getValue() == animalToRemove) {
-                return true;
+            if (compareItem.getValue().equals(animalToRemove)) {
+                return false;
             }
             compareItem = compareItem.getNext();
         }
-        if (compareItem.getValue() == animalToRemove) {
-            return true;
+        if (compareItem.getValue().equals(animalToRemove)) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     private boolean isEmpty() { return head == null; }
