@@ -28,13 +28,13 @@ public class AnimalList {
         current.setNext(new AnimalListItem(newAnimal));
     }
 
-    public void remove(Animal animalToRemove) {
+    public void removeAll(Animal animalToRemove) {
         if (specialCaseCheckerTurnsOn(animalToRemove)) {
             return;
         }
         AnimalListItem current = head;
         int counter = 0;
-        while (!current.getValue().equals(animalToRemove)) {
+        while (isNotAnimalToRemove(current,animalToRemove)) {
             current = current.getNext();
             counter++;
         }
@@ -47,7 +47,11 @@ public class AnimalList {
         } else {
             beforeToDelete.setNext(current.getNext());
         }
-        remove(animalToRemove);
+        removeAll(animalToRemove);
+    }
+
+    private boolean isNotAnimalToRemove(AnimalListItem current, Animal animalToRemove) {
+        return !current.getValue().equals(animalToRemove);
     }
 
     @Override
@@ -70,7 +74,7 @@ public class AnimalList {
         }
         if (head.getValue().equals(animalToRemove)) {
             head = head.getNext();
-            remove(animalToRemove);
+            removeAll(animalToRemove);
             return true;
         }
         return animalIsInList(animalToRemove);

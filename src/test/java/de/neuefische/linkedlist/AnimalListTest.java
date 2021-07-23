@@ -49,7 +49,7 @@ class AnimalListTest {
         Animal elefant = new Animal("Elefant");
         AnimalList testList = new AnimalList(pferd);
         //WHEN
-        testList.remove(pferd);
+        testList.removeAll(pferd);
         testList.add(elefant);
         String expected = "Elefant";
         //THEN
@@ -68,7 +68,7 @@ class AnimalListTest {
         //WHEN
         testList.add(affe);
         testList.add(elefant);
-        testList.remove(pferd);
+        testList.removeAll(pferd);
         String expected = "Affe -> Elefant";
         //THEN
         String actual = testList.toString();
@@ -86,7 +86,7 @@ class AnimalListTest {
         //WHEN
         testList.add(affe);
         testList.add(elefant);
-        testList.remove(affe);
+        testList.removeAll(affe);
         String expected = "Pferd -> Elefant";
         //THEN
         String actual = testList.toString();
@@ -104,7 +104,7 @@ class AnimalListTest {
         //WHEN
         testList.add(affe);
         testList.add(elefant);
-        testList.remove(pferd);
+        testList.removeAll(pferd);
         String expected = "Affe -> Affe -> Elefant";
         //THEN
         String actual = testList.toString();
@@ -120,8 +120,8 @@ class AnimalListTest {
         Animal elefant = new Animal("Elefant");
         AnimalList testList = new AnimalList(affe);
         //WHEN
-        testList.remove(affe);
-        testList.remove(pferd);
+        testList.removeAll(affe);
+        testList.removeAll(pferd);
         String expected = "";
         //THEN
         String actual = testList.toString();
@@ -138,7 +138,7 @@ class AnimalListTest {
         //WHEN
         testList.add(affe);
         testList.add(elefant);
-        testList.remove(elefant);
+        testList.removeAll(elefant);
         String expected = "Pferd -> Affe";
         //THEN
         String actual = testList.toString();
@@ -168,7 +168,7 @@ class AnimalListTest {
         testList.add(fisch);
         testList.add(mensch);
         testList.add(fliege);
-        testList.remove(fliege);
+        testList.removeAll(fliege);
         String expected = "Pferd -> Affe -> Elefant -> Nashorn -> Elch -> Kuh -> Fisch -> Mensch";
         //THEN
         String actual = testList.toString();
@@ -198,7 +198,7 @@ class AnimalListTest {
         testList.add(fisch);
         testList.add(mensch);
         testList.add(fliege);
-        testList.remove(mensch);
+        testList.removeAll(mensch);
         String expected = "Pferd -> Affe -> Elefant -> Nashorn -> Elch -> Kuh -> Fisch -> Fliege";
         //THEN
         String actual = testList.toString();
@@ -227,7 +227,7 @@ class AnimalListTest {
         testList.add(fisch);
         testList.add(mensch);
         testList.add(fliege);
-        testList.remove(pferd);
+        testList.removeAll(pferd);
         String expected = "Affe -> Elefant -> Nashorn -> Elch -> Kuh -> Fisch -> Mensch -> Fliege";
         //THEN
         String actual = testList.toString();
@@ -276,7 +276,7 @@ class AnimalListTest {
         }
 
         // WHEN
-        list.remove(new Animal(animalNameToRemove));
+        list.removeAll(new Animal(animalNameToRemove));
         String actual = list.toString();
 
         // THEN
@@ -293,5 +293,24 @@ class AnimalListTest {
                 Arguments.of("Remove 2 from head", new String[]{"dog", "dog", "cat", "dog", "mouse", "dog"}, "dog", "cat -> mouse"),
         };
     }
+
+    @Test
+    public void testRemoveWithID() {
+        //GIVEN
+        Animal pferd = new Animal("Pferd");
+        Animal affe = new Animal("Affe");
+        Animal elefant = new Animal("Elefant");
+        AnimalList testList = new AnimalList(pferd);
+        //WHEN
+        testList.add(affe);
+        testList.add(elefant);
+        testList.removeAll(elefant);
+        String expected = "Pferd -> Affe";
+        //THEN
+        String actual = testList.toString();
+        assertEquals(expected, actual);
+        assertNull(testList.getHead().getNext().getNext());
+    }
+
 }
 
